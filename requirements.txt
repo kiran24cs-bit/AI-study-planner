@@ -1,0 +1,15 @@
+Flask==3.0.3
+Flask-SQLAlchemy==3.1.1
+Flask-Login==0.6.3
+Werkzeug==3.0.3
+python-dotenv==1.0.1
+groq==0.11.0
+PyPDF2==3.0.1
+pdfplumber==0.11.4
+Pillow==10.4.0
+pytesseract==0.3.13
+reportlab==4.2.2
+matplotlib==3.9.2
+pandas==2.2.2
+schedule==1.2.2
+APScheduler==3.10.4
