@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Test — {{ test.chapter_name }}{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}" />{% endblock %}
+
+{% block body %}
+<div class="exam-shell" data-test-id="{{ test.id }}" data-duration="{{ test.duration_minutes }}">
+  <header class="exam-top glass">
+    <div>
+      <strong>{{ test.subject_name }}</strong>
+      <span class="muted">{{ test.chapter_name }}</span>
+    </div>
+    <div class="exam-timer" id="exam-timer">--:--</div>
+    <button class="btn primary" id="submit-test">Submit test</button>
+  </header>
+
+  <div class="progress-bar"><div id="progress-fill"></div></div>
+
+  <main class="exam-body">
+    <section class="glass panel question-panel">
+      <div id="question-area"><div class="skeleton tall"></div></div>
+      <div class="exam-nav">
+        <button class="btn ghost" id="prev-q">Previous</button>
+        <button class="btn ghost" id="clear-q">Clear</button>
+        <button class="btn primary" id="next-q">Next</button>
+      </div>
+    </section>
+
+    <aside class="glass panel palette-panel">
+      <h2>Question palette</h2>
+      <div class="palette" id="palette"></div>
+      <ul class="palette-legend">
+        <li><i class="dot green"></i> Answered</li>
+        <li><i class="dot orange"></i> Visited</li>
+        <li><i class="dot grey"></i> Not visited</li>
+      </ul>
+    </aside>
+  </main>
+</div>
+
+<div class="modal" id="result-modal" hidden>
+  <div class="glass modal-card wide">
+    <h2>Your result</h2>
+    <div id="result-body"></div>
+    <div class="modal-actions">
+      <a class="btn ghost" href="{{ url_for('dashboard') }}">Dashboard</a>
+      <a class="btn primary" id="analysis-link" href="{{ url_for('analysis_page') }}">See AI analysis</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}<script src="{{ url_for('static', filename='js/test.js') }}"></script>{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Create account — StudyPilot{% endblock %}
+
+{% block body %}
+<div class="auth-wrap">
+  <a class="brand auth-brand" href="{{ url_for('index') }}">
+    <span class="brand-mark">SP</span><span>StudyPilot</span>
+  </a>
+
+  <div class="glass auth-card reveal">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, message in messages %}
+        <div class="alert {{ category }}">{{ message }}</div>
+      {% endfor %}
+    {% endwith %}
+
+    <h1>Create your account</h1>
+    <p class="muted">Then upload a timetable and get a plan in minutes.</p>
+
+    <form method="post" action="{{ url_for('register') }}" class="form">
+      <label>Full name
+        <input type="text" name="name" required autocomplete="name" />
+      </label>
+      <label>Email
+        <input type="email" name="email" required autocomplete="email" />
+      </label>
+      <label>Password <small class="muted">(min 6 characters)</small>
+        <input type="password" name="password" minlength="6" required autocomplete="new-password" />
+      </label>
+      <label>Security question <small class="muted">(used for password reset)</small>
+        <input type="text" name="security_question" placeholder="e.g. My first school?" />
+      </label>
+      <label>Security answer
+        <input type="text" name="security_answer" autocomplete="off" />
+      </label>
+      <button class="btn primary block" type="submit">Create account</button>
+    </form>
+
+    <p class="auth-alt">Already registered? <a href="{{ url_for('login') }}">Sign in</a></p>
+  </div>
+</div>
+{% endblock %}

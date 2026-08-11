@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% set active = 'performance' %}
+{% set page_title = 'Performance' %}
+{% block title %}Performance — StudyPilot{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}" />{% endblock %}
+
+{% block body %}
+<div class="app-shell">
+  {% include "_shell.html" %}
+  <main class="app-main">
+    <section class="glass panel panel-head">
+      <h2>Performance overview</h2>
+      <a class="btn ghost sm" href="{{ url_for('export_performance_pdf') }}">Export PDF</a>
+    </section>
+
+    <section class="dash-grid">
+      <div class="glass panel"><h2>Weekly study minutes</h2><canvas id="chart-weekly"></canvas></div>
+      <div class="glass panel"><h2>Monthly study minutes</h2><canvas id="chart-monthly"></canvas></div>
+      <div class="glass panel"><h2>Subject-wise average</h2><canvas id="chart-subject"></canvas></div>
+      <div class="glass panel"><h2>Chapter-wise average</h2><canvas id="chart-chapter"></canvas></div>
+      <div class="glass panel"><h2>Accuracy trend</h2><canvas id="chart-accuracy"></canvas></div>
+      <div class="glass panel"><h2>Weak areas</h2><canvas id="chart-weak"></canvas></div>
+    </section>
+
+    <section class="glass panel">
+      <h2>Test history</h2>
+      <div id="history" class="data-list"></div>
+    </section>
+  </main>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+<script src="{{ url_for('static', filename='js/analysis.js') }}"></script>
+{% endblock %}

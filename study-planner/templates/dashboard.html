@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% set active = 'dashboard' %}
+{% set page_title = 'Dashboard' %}
+{% block title %}Dashboard — StudyPilot{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}" />{% endblock %}
+
+{% block body %}
+<div class="app-shell">
+  {% include "_shell.html" %}
+  <main class="app-main">
+    <section class="greet glass">
+      <div>
+        <h1 id="greeting">Hello, {{ user.name.split()[0] }}</h1>
+        <p class="muted" id="motivation">Loading today's motivation…</p>
+      </div>
+      <div class="greet-actions">
+        <a class="btn ghost" href="{{ url_for('onboarding') }}">Setup</a>
+        <a class="btn primary" href="{{ url_for('planner_page') }}">Open planner</a>
+      </div>
+    </section>
+
+    <section class="stat-grid">
+      <div class="glass stat"><span class="stat-label">Next exam in</span><strong id="countdown-days">—</strong><span class="muted" id="countdown-subject">No exams yet</span></div>
+      <div class="glass stat"><span class="stat-label">Study streak</span><strong id="streak">0</strong><span class="muted">days in a row</span></div>
+      <div class="glass stat"><span class="stat-label">Productivity</span><strong id="productivity">0</strong><span class="muted">score /100</span></div>
+      <div class="glass stat"><span class="stat-label">Focused today</span><strong id="minutes-today">0m</strong><span class="muted">timer minutes</span></div>
+    </section>
+
+    <section class="dash-grid">
+      <div class="glass panel ring-panel">
+        <h2>Plan completion</h2>
+        <div class="ring" id="ring"><svg viewBox="0 0 120 120"><circle class="ring-bg" cx="60" cy="60" r="52"></circle><circle class="ring-fg" id="ring-fg" cx="60" cy="60" r="52"></circle></svg><div class="ring-label" id="ring-label">0%</div></div>
+        <p class="muted center">of all scheduled tasks completed</p>
+      </div>
+
+      <div class="glass panel">
+        <h2>Today's tasks</h2>
+        <div id="today-tasks" class="task-list"><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div></div>
+      </div>
+
+      <div class="glass panel">
+        <h2>Today's revision</h2>
+        <div id="revision-list" class="task-list"><div class="skeleton"></div></div>
+      </div>
+
+      <div class="glass panel">
+        <h2>Upcoming exams</h2>
+        <div id="exam-list" class="task-list"><div class="skeleton"></div></div>
+      </div>
+
+      <div class="glass panel">
+        <h2>AI suggestions</h2>
+        <ul id="suggestions" class="bullets"><li class="skeleton"></li><li class="skeleton"></li></ul>
+      </div>
+
+      <div class="glass panel timer-panel">
+        <h2>Pomodoro timer</h2>
+        <div class="timer-display" id="timer-display">25:00</div>
+        <div class="timer-modes">
+          <button class="chip active" data-work="25" data-break="5">25 / 5</button>
+          <button class="chip" data-work="50" data-break="10">50 / 10</button>
+          <button class="chip" data-work="15" data-break="3">Custom</button>
+        </div>
+        <div class="timer-actions">
+          <button class="btn primary" id="timer-start">Start</button>
+          <button class="btn ghost" id="timer-reset">Reset</button>
+        </div>
+        <p class="muted center" id="timer-stats">—</p>
+      </div>
+    </section>
+
+    <section class="glass panel">
+      <div class="panel-head"><h2>Weak topics</h2><a class="btn ghost sm" href="{{ url_for('performance_page') }}">Performance</a></div>
+      <div id="weak-topics" class="chip-row"><span class="muted">No weak topics yet.</span></div>
+    </section>
+  </main>
+</div>
+
+<!-- Chapter completed -> offer a test -->
+<div class="modal" id="test-modal" hidden>
+  <div class="glass modal-card">
+    <h2>Chapter completed 🎉</h2>
+    <p class="muted">Want to lock it in with a 20-question AI test?</p>
+    <div class="modal-actions">
+      <button class="btn ghost" data-close>Later</button>
+      <button class="btn primary" id="take-test">Take test</button>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>{% endblock %}

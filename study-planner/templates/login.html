@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}Sign in — StudyPilot{% endblock %}
+
+{% block body %}
+<div class="auth-wrap">
+  <a class="brand auth-brand" href="{{ url_for('index') }}">
+    <span class="brand-mark">SP</span><span>StudyPilot</span>
+  </a>
+
+  <div class="glass auth-card reveal">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, message in messages %}
+        <div class="alert {{ category }}">{{ message }}</div>
+      {% endfor %}
+    {% endwith %}
+
+    {% if forgot %}
+      <h1>Reset password</h1>
+      <p class="muted">Answer your security question to set a new password.</p>
+      <form method="post" action="{{ url_for('forgot_password') }}" class="form">
+        {% if stage == 'answer' and user %}
+          <input type="hidden" name="email" value="{{ user.email }}" />
+          <label>Security question
+            <input type="text" value="{{ user.security_question or 'What is your security answer?' }}" disabled />
+          </label>
+          <label>Your answer
+            <input type="text" name="security_answer" required autocomplete="off" />
+          </label>
+          <label>New password
+            <input type="password" name="new_password" minlength="6" required />
+          </label>
+          <button class="btn primary block" type="submit">Update password</button>
+        {% else %}
+          <label>Email
+            <input type="email" name="email" required autocomplete="email" />
+          </label>
+          <button class="btn primary block" type="submit">Continue</button>
+        {% endif %}
+      </form>
+      <p class="auth-alt"><a href="{{ url_for('login') }}">Back to sign in</a></p>
+    {% else %}
+      <h1>Welcome back</h1>
+      <p class="muted">Sign in to continue your streak.</p>
+      <form method="post" action="{{ url_for('login') }}" class="form">
+        <label>Email
+          <input type="email" name="email" required autocomplete="email" />
+        </label>
+        <label>Password
+          <input type="password" name="password" required autocomplete="current-password" />
+        </label>
+        <button class="btn primary block" type="submit">Sign in</button>
+      </form>
+      <p class="auth-alt">
+        <a href="{{ url_for('forgot_password') }}">Forgot password?</a>
+        <span>·</span>
+        <a href="{{ url_for('register') }}">Create an account</a>
+      </p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

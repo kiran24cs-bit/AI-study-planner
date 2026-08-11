@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% set active = 'analysis' %}
+{% set page_title = 'AI Analysis' %}
+{% block title %}Analysis — StudyPilot{% endblock %}
+{% block styles %}<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}" />{% endblock %}
+
+{% block body %}
+<div class="app-shell" data-test-id="{{ test_id or '' }}">
+  {% include "_shell.html" %}
+  <main class="app-main">
+    <section class="glass panel">
+      <div class="panel-head">
+        <h2 id="analysis-title">Latest test analysis</h2>
+        <a class="btn ghost sm" href="{{ url_for('export_study_report_pdf') }}">Export report PDF</a>
+      </div>
+      <div id="analysis-summary" class="stat-grid"><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div></div>
+    </section>
+
+    <section class="dash-grid">
+      <div class="glass panel"><h2>Weak topics</h2><div id="weak" class="chip-row"></div></div>
+      <div class="glass panel"><h2>Strong topics</h2><div id="strong" class="chip-row"></div></div>
+      <div class="glass panel"><h2>Concept gaps</h2><p id="gaps" class="muted"></p></div>
+      <div class="glass panel"><h2>Time management</h2><p id="time" class="muted"></p></div>
+      <div class="glass panel"><h2>Guessing pattern</h2><p id="guess" class="muted"></p></div>
+      <div class="glass panel"><h2>Confidence</h2><p id="confidence" class="muted"></p></div>
+    </section>
+
+    <section class="glass panel">
+      <h2>Mistakes</h2>
+      <div id="mistakes" class="data-list"></div>
+    </section>
+  </main>
+</div>
+{% endblock %}
+
+{% block scripts %}<script src="{{ url_for('static', filename='js/analysis.js') }}"></script>{% endblock %}

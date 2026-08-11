@@ -1,0 +1,26 @@
+{# Shared app shell: sidebar + topbar. Pages set `active` before including. #}
+<aside class="sidebar" id="sidebar">
+  <a class="brand" href="{{ url_for('dashboard') }}">
+    <span class="brand-mark">SP</span><span>StudyPilot</span>
+  </a>
+  <nav class="side-nav">
+    <a href="{{ url_for('dashboard') }}" class="{{ 'active' if active == 'dashboard' }}"><span>📊</span> Dashboard</a>
+    <a href="{{ url_for('onboarding') }}" class="{{ 'active' if active == 'setup' }}"><span>🧩</span> Setup</a>
+    <a href="{{ url_for('planner_page') }}" class="{{ 'active' if active == 'planner' }}"><span>🗓️</span> Planner</a>
+    <a href="{{ url_for('performance_page') }}" class="{{ 'active' if active == 'performance' }}"><span>📈</span> Performance</a>
+    <a href="{{ url_for('analysis_page') }}" class="{{ 'active' if active == 'analysis' }}"><span>🧠</span> Analysis</a>
+    <a href="{{ url_for('settings_page') }}" class="{{ 'active' if active == 'settings' }}"><span>⚙️</span> Settings</a>
+  </nav>
+  <div class="side-foot">
+    <a class="btn ghost block" href="{{ url_for('logout') }}">Sign out</a>
+  </div>
+</aside>
+
+<header class="topbar">
+  <button class="icon-btn" id="sidebar-toggle" aria-label="Toggle menu">☰</button>
+  <div class="topbar-title">{{ page_title or 'Dashboard' }}</div>
+  <div class="topbar-actions">
+    <button class="icon-btn" id="theme-toggle" title="Toggle theme" aria-label="Toggle theme">◐</button>
+    <div class="avatar" title="{{ user.email }}">{{ user.name[:1]|upper }}</div>
+  </div>
+</header>

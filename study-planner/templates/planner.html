@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% set active = 'planner' %}
+{% set page_title = 'Planner' %}
+{% block title %}Planner — StudyPilot{% endblock %}
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/planner.css') }}" />
+{% endblock %}
+
+{% block body %}
+<div class="app-shell">
+  {% include "_shell.html" %}
+  <main class="app-main">
+    <section class="glass panel planner-toolbar">
+      <div class="month-nav">
+        <button class="icon-btn" id="prev-month">‹</button>
+        <h2 id="month-label">—</h2>
+        <button class="icon-btn" id="next-month">›</button>
+      </div>
+      <div class="toolbar-actions">
+        <button class="btn ghost" id="regen-day">Regenerate selected day</button>
+        <button class="btn primary" id="regen-all">Regenerate full plan</button>
+        <a class="btn ghost" href="{{ url_for('export_timetable_pdf') }}">Export PDF</a>
+      </div>
+    </section>
+
+    <div class="legend">
+      <span><i class="dot green"></i> Completed</span>
+      <span><i class="dot orange"></i> Pending</span>
+      <span><i class="dot blue"></i> Revision</span>
+      <span><i class="dot red"></i> Exam</span>
+      <span><i class="dot grey"></i> Unavailable</span>
+    </div>
+
+    <section class="glass panel">
+      <div class="calendar-head">
+        <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+      </div>
+      <div class="calendar" id="calendar"></div>
+    </section>
+
+    <section class="glass panel">
+      <div class="panel-head">
+        <h2 id="day-title">Select a day</h2>
+        <span class="muted">Drag a task onto another day to move it.</span>
+      </div>
+      <div id="day-tasks" class="task-list"></div>
+    </section>
+  </main>
+</div>
+
+<div class="modal" id="test-modal" hidden>
+  <div class="glass modal-card">
+    <h2>Chapter completed 🎉</h2>
+    <p class="muted">Generate a 20-question AI test for this chapter?</p>
+    <div class="modal-actions">
+      <button class="btn ghost" data-close>Later</button>
+      <button class="btn primary" id="take-test">Take test</button>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}<script src="{{ url_for('static', filename='js/planner.js') }}"></script>{% endblock %}
